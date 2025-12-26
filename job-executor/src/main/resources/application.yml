@@ -21,9 +21,6 @@ management:
     prometheus:
       enabled: true
   metrics:
-    export:
-      prometheus:
-        enabled: true
     tags:
       application: ${spring.application.name}
       environment: ${ENVIRONMENT:local}
@@ -37,6 +34,10 @@ management:
       enabled: true
     readinessState:
       enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 
 logging:
   level:
