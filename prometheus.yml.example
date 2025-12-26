@@ -1,0 +1,61 @@
+# Cấu hình Prometheus mẫu để scrape metrics từ các services
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # API Service
+  - job_name: 'mono-repo-api'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['localhost:8080']
+        labels:
+          service: 'api'
+          environment: 'local'
+
+  # Management API Service (nếu có port khác)
+  - job_name: 'mono-repo-mngt-api'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['localhost:8081']
+        labels:
+          service: 'mngt-api'
+          environment: 'local'
+
+  # Internal API Service
+  - job_name: 'mono-repo-int-api'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['localhost:8082']
+        labels:
+          service: 'int-api'
+          environment: 'local'
+
+  # Event Processor
+  - job_name: 'mono-repo-event-processor'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['localhost:8083']
+        labels:
+          service: 'event-processor'
+          environment: 'local'
+
+  # Job Executor
+  - job_name: 'mono-repo-job-executor'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['localhost:8084']
+        labels:
+          service: 'job-executor'
+          environment: 'local'
+
+  # Projector
+  - job_name: 'mono-repo-projector'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['localhost:8085']
+        labels:
+          service: 'projector'
+          environment: 'local'
+
+

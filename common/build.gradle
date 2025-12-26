@@ -1,0 +1,7 @@
+dependencies {
+    // Phụ thuộc vào Domain module
+    implementation project(':domain')
+    
+    // Spring để sử dụng ApplicationContext
+    implementation 'org.springframework:spring-context'
+}

@@ -1,0 +1,57 @@
+allprojects {
+    group = 'com.example'
+    version = '1.0.0-SNAPSHOT'
+    
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+    
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.boot:spring-boot-dependencies:3.2.0'
+        }
+    }
+    
+    java {
+        sourceCompatibility = '21'
+        targetCompatibility = '21'
+    }
+    
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+    
+    // Chỉ apply Spring Boot plugin cho các executable modules
+    def executableModules = ['api', 'mngt-api', 'int-api', 'event-processor', 'job-executor', 'projector']
+    if (executableModules.contains(project.name)) {
+        apply plugin: 'org.springframework.boot'
+        
+        dependencies {
+            // Spring Boot Actuator - Health và Metrics endpoints
+            implementation 'org.springframework.boot:spring-boot-starter-actuator'
+            
+            // Micrometer Prometheus - Export metrics cho Prometheus
+            implementation 'io.micrometer:micrometer-registry-prometheus'
+        }
+    }
+    
+    dependencies {
+        // Lombok (nếu đang sử dụng)
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        
+        // Testing
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+    
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+}

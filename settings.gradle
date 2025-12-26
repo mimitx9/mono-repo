@@ -1,0 +1,28 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    plugins {
+        id 'org.springframework.boot' version '3.2.0'
+        id 'io.spring.dependency-management' version '1.1.4'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '3.2.0' apply false
+    id 'io.spring.dependency-management' version '1.1.4' apply false
+}
+
+rootProject.name = 'mono-repo'
+
+include 'api'
+include 'common'
+include 'domain'
+include 'event-processor'
+include 'infra'
+include 'int-api'
+include 'job-executor'
+include 'mngt-api'
+include 'projector'
+
