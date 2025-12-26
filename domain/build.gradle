@@ -1,9 +1,4 @@
 dependencies {
-    // Domain module không phụ thuộc vào framework, chỉ chứa business logic
-    // Có thể thêm validation nếu cần
     implementation 'jakarta.validation:jakarta.validation-api'
-    
-    // Note: JPA annotations đã được loại bỏ khỏi domain module.
-    // Tất cả JPA entities nằm trong Infra layer để đảm bảo domain độc lập.
 }
 

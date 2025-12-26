@@ -4,16 +4,16 @@ plugins {
 
 configurations.all {
     resolutionStrategy {
-        force 'io.grpc:grpc-core:1.64.0'
-        force 'io.grpc:grpc-api:1.64.0'
-        force 'io.grpc:grpc-stub:1.64.0'
-        force 'io.grpc:grpc-protobuf:1.64.0'
-        force 'io.grpc:grpc-netty-shaded:1.64.0'
-        force 'io.grpc:grpc-inprocess:1.64.0'
-        force 'io.grpc:grpc-services:1.64.0'
-        force 'io.grpc:grpc-protobuf-lite:1.64.0'
-        force 'io.grpc:grpc-util:1.64.0'
-        force 'io.grpc:grpc-context:1.64.0'
+        force 'io.grpc:grpc-core:1.75.0'
+        force 'io.grpc:grpc-api:1.75.0'
+        force 'io.grpc:grpc-stub:1.75.0'
+        force 'io.grpc:grpc-protobuf:1.75.0'
+        force 'io.grpc:grpc-netty-shaded:1.75.0'
+        force 'io.grpc:grpc-inprocess:1.75.0'
+        force 'io.grpc:grpc-services:1.75.0'
+        force 'io.grpc:grpc-protobuf-lite:1.75.0'
+        force 'io.grpc:grpc-util:1.75.0'
+        force 'io.grpc:grpc-context:1.75.0'
     }
 }
 
@@ -21,29 +21,17 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    
-    // H2 Database cho development (embedded database)
     runtimeOnly 'com.h2database:h2'
-    
-    // gRPC dependencies - đảm bảo tất cả cùng phiên bản
     implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
     implementation 'net.devh:grpc-server-spring-boot-starter:3.1.0.RELEASE'
-    
-    // Force phiên bản gRPC để tránh xung đột
-    implementation 'io.grpc:grpc-core:1.64.0'
-    implementation 'io.grpc:grpc-stub:1.64.0'
-    implementation 'io.grpc:grpc-protobuf:1.64.0'
-    implementation 'io.grpc:grpc-netty-shaded:1.64.0'
-    implementation 'io.grpc:grpc-services:1.64.0'
-    
-    // Protobuf compiler
-    implementation 'com.google.protobuf:protobuf-java:3.25.3'
-    protobuf 'com.google.protobuf:protoc:3.25.3'
-    
-    // javax.annotation for generated code
+    implementation 'io.grpc:grpc-core:1.75.0'
+    implementation 'io.grpc:grpc-stub:1.75.0'
+    implementation 'io.grpc:grpc-protobuf:1.75.0'
+    implementation 'io.grpc:grpc-netty-shaded:1.75.0'
+    implementation 'io.grpc:grpc-services:1.75.0'
+    implementation 'com.google.protobuf:protobuf-java:4.28.2'
+    protobuf 'com.google.protobuf:protoc:4.28.2'
     compileOnly 'javax.annotation:javax.annotation-api:1.3.2'
-    
-    // Phụ thuộc vào Domain, Common, và Infra modules
     implementation project(':domain')
     implementation project(':common')
     implementation project(':infra')
@@ -51,11 +39,11 @@ dependencies {
 
 protobuf {
     protoc {
-        artifact = 'com.google.protobuf:protoc:3.25.3'
+        artifact = 'com.google.protobuf:protoc:4.28.2'
     }
     plugins {
         grpc {
-            artifact = 'io.grpc:protoc-gen-grpc-java:1.64.0'
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.75.0'
         }
     }
     generateProtoTasks {
@@ -63,15 +51,9 @@ protobuf {
             grpc {}
         }
     }
-    // Sử dụng thư mục mặc định của Gradle (build/generated)
-    // Không cần set generatedFilesBaseDir
 }
 
-// Đảm bảo proto files được compile trước khi compile Java
 compileJava.dependsOn generateProto
-
-// Protobuf plugin tự động thêm generated files vào sourceSets
-// Không cần cấu hình thủ công
 
 clean {
     delete 'src/generated'

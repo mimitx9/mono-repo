@@ -1,14 +1,9 @@
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    
-    // Phụ thuộc vào Domain, Common, và Infra modules
     implementation project(':domain')
     implementation project(':common')
     implementation project(':infra')
-    
-    // Có thể thêm Spring Kafka, RabbitMQ, hoặc các message broker khác
-    // implementation 'org.springframework.kafka:spring-kafka'
 }
 
 

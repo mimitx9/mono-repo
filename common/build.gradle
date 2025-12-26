@@ -1,10 +1,5 @@
 dependencies {
-    // Phụ thuộc vào Domain module
     implementation project(':domain')
-    
-    // Spring để sử dụng ApplicationContext
     implementation 'org.springframework:spring-context'
-    
-    // SLF4J cho logging
     implementation 'org.slf4j:slf4j-api'
 }

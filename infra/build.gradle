@@ -1,12 +1,5 @@
 dependencies {
-    // Phụ thuộc vào Domain module
     implementation project(':domain')
-    
-    // Spring Data JPA cho database adapter
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    
-    // Spring Kafka hoặc RabbitMQ cho event publishing (tùy chọn)
-    // implementation 'org.springframework.kafka:spring-kafka'
-    // implementation 'org.springframework.boot:spring-boot-starter-amqp'
 }
 
