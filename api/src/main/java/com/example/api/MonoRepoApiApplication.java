@@ -21,7 +21,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
     "com.example.infra"
 })
 @EnableJpaRepositories(basePackages = "com.example.infra")
-@EntityScan(basePackages = {"com.example.domain", "com.example.infra"})
+@EntityScan(basePackages = "com.example.infra") // Chỉ scan entities trong infra layer
 public class MonoRepoApiApplication {
 
     public static void main(String[] args) {

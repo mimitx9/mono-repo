@@ -3,9 +3,7 @@ dependencies {
     // Có thể thêm validation nếu cần
     implementation 'jakarta.validation:jakarta.validation-api'
     
-    // JPA annotations cho entities
-    // Note: Trong thực tế, tốt hơn là tách JPA entities ra Infra layer
-    // nhưng để đơn giản ví dụ, chúng ta đặt ở đây
-    implementation 'jakarta.persistence:jakarta.persistence-api'
+    // Note: JPA annotations đã được loại bỏ khỏi domain module.
+    // Tất cả JPA entities nằm trong Infra layer để đảm bảo domain độc lập.
 }
 
