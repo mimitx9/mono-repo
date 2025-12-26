@@ -1,6 +1,7 @@
 package com.example.domain.example;
 
 import com.example.domain.model.DomainModel;
+import lombok.Getter;
 
 /**
  * Ví dụ Domain Model - User.
@@ -9,6 +10,7 @@ import com.example.domain.model.DomainModel;
  * Domain Model này hoàn toàn độc lập với infrastructure (JPA, database, etc.).
  * JPA annotations và persistence logic nằm trong Infra layer (UserEntity).
  */
+@Getter
 public class User implements DomainModel {
     
     private final String id;
@@ -28,15 +30,6 @@ public class User implements DomainModel {
         this.id = id;
         this.name = name;
         this.email = email.getValue();
-    }
-
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public Email getEmail() {

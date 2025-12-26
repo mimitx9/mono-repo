@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package com.example.api.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.example.api.grpc";
+option java_outer_classname = "HealthProto";
+
+// Health Service
+service HealthService {
+  // Health check endpoint
+  rpc Health (HealthRequest) returns (HealthResponse);
+}
+
+// Request cho health check
+message HealthRequest {
+}
+
+// Response cho health check
+message HealthResponse {
+  string status = 1;
+  string message = 2;
+}
+
