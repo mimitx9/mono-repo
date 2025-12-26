@@ -75,6 +75,20 @@ public class QueryBus {
                 }
             }
         }
+        
+        // Fallback: Kiểm tra superclass nếu không tìm thấy trong interfaces
+        java.lang.reflect.Type superclass = handler.getClass().getGenericSuperclass();
+        if (superclass instanceof java.lang.reflect.ParameterizedType) {
+            java.lang.reflect.ParameterizedType paramType = (java.lang.reflect.ParameterizedType) superclass;
+            if (paramType.getRawType().equals(QueryHandler.class)) {
+                java.lang.reflect.Type[] args = paramType.getActualTypeArguments();
+                if (args.length > 0 && args[0] instanceof Class) {
+                    Class<?> handlerQueryType = (Class<?>) args[0];
+                    return handlerQueryType.isAssignableFrom(queryType);
+                }
+            }
+        }
+        
         return false;
     }
 }

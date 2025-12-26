@@ -14,11 +14,6 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * gRPC Service implementation cho User Service.
- * Service này sử dụng CommandBus và QueryBus để giao tiếp với domain layer,
- * tương tự như REST API controllers.
- */
 @GrpcService
 public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     
@@ -36,31 +31,23 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void createUser(CreateUserRequest request, StreamObserver<UserResponse> responseObserver) {
         try {
             logger.info("gRPC CreateUser request: name={}, email={}", request.getName(), request.getEmail());
-            
-            // Validate request
-            if (request.getName() == null || request.getName().isBlank()) {
+            if (request.getName().isBlank()) {
                 responseObserver.onError(Status.INVALID_ARGUMENT
                     .withDescription("Name is required")
                     .asRuntimeException());
                 return;
             }
-            
-            if (request.getEmail() == null || request.getEmail().isBlank()) {
+            if (request.getEmail().isBlank()) {
                 responseObserver.onError(Status.INVALID_ARGUMENT
                     .withDescription("Email is required")
                     .asRuntimeException());
                 return;
             }
-            
-            // Tạo command từ gRPC request
             CreateUserCommand command = new CreateUserCommand(request.getName(), request.getEmail());
-            
-            // Gửi command qua CommandBus
             commandBus.send(command);
             
-            // Trả về response (trong thực tế có thể query lại để lấy user vừa tạo)
             UserResponse response = UserResponse.newBuilder()
-                .setId("") // ID sẽ được tạo bởi domain
+                .setId("")
                 .setName(request.getName())
                 .setEmail(request.getEmail())
                 .build();
@@ -86,22 +73,14 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
     public void getUser(GetUserRequest request, StreamObserver<UserResponse> responseObserver) {
         try {
             logger.info("gRPC GetUser request: userId={}", request.getUserId());
-            
-            // Validate request
-            if (request.getUserId() == null || request.getUserId().isBlank()) {
+            if (request.getUserId().isBlank()) {
                 responseObserver.onError(Status.INVALID_ARGUMENT
                     .withDescription("User ID is required")
                     .asRuntimeException());
                 return;
             }
-            
-            // Tạo query
             GetUserQuery query = new GetUserQuery(request.getUserId());
-            
-            // Gửi query qua QueryBus
             GetUserQueryResult result = queryBus.send(query);
-            
-            // Convert domain result sang gRPC response
             UserResponse response = UserResponse.newBuilder()
                 .setId(result.id() != null ? result.id() : "")
                 .setName(result.name() != null ? result.name() : "")

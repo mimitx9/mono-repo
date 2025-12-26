@@ -10,10 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-/**
- * Health check controller.
- * Controller này kế thừa từ BaseController để có access đến CommandBus và QueryBus.
- */
 @RestController
 @RequestMapping("/api")
 public class HealthController extends BaseController {

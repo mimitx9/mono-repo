@@ -73,6 +73,20 @@ public class CommandBus {
                 }
             }
         }
+        
+        // Fallback: Kiểm tra superclass nếu không tìm thấy trong interfaces
+        java.lang.reflect.Type superclass = handler.getClass().getGenericSuperclass();
+        if (superclass instanceof java.lang.reflect.ParameterizedType) {
+            java.lang.reflect.ParameterizedType paramType = (java.lang.reflect.ParameterizedType) superclass;
+            if (paramType.getRawType().equals(CommandHandler.class)) {
+                java.lang.reflect.Type[] args = paramType.getActualTypeArguments();
+                if (args.length > 0 && args[0] instanceof Class) {
+                    Class<?> handlerCommandType = (Class<?>) args[0];
+                    return handlerCommandType.isAssignableFrom(commandType);
+                }
+            }
+        }
+        
         return false;
     }
 }

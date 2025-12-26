@@ -6,27 +6,20 @@ option java_multiple_files = true;
 option java_package = "com.example.api.grpc";
 option java_outer_classname = "UserProto";
 
-// User Service
 service UserService {
-  // Tạo user mới
   rpc CreateUser (CreateUserRequest) returns (UserResponse);
-  
-  // Lấy thông tin user theo ID
   rpc GetUser (GetUserRequest) returns (UserResponse);
 }
 
-// Request để tạo user
 message CreateUserRequest {
   string name = 1;
   string email = 2;
 }
 
-// Request để lấy user
 message GetUserRequest {
   string user_id = 1;
 }
 
-// Response chứa thông tin user
 message UserResponse {
   string id = 1;
   string name = 2;

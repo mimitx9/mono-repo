@@ -9,10 +9,6 @@ import com.example.domain.spi.Repository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Configuration để register Domain Handlers như Spring beans.
- * Domain handlers không có @Component để giữ domain module độc lập với Spring.
- */
 @Configuration
 public class DomainHandlersConfiguration {
 
@@ -20,7 +16,6 @@ public class DomainHandlersConfiguration {
     public CreateUserCommandHandler createUserCommandHandler(
             UserRepository userRepository,
             EventPublisher eventPublisher) {
-        // UserRepository extends Repository<User, String>, nên có thể cast
         return new CreateUserCommandHandler(
             (Repository<User, String>) userRepository, 
             eventPublisher
@@ -29,7 +24,6 @@ public class DomainHandlersConfiguration {
 
     @Bean
     public GetUserQueryHandler getUserQueryHandler(UserRepository userRepository) {
-        // UserRepository extends Repository<User, String>, nên có thể cast
         return new GetUserQueryHandler((Repository<User, String>) userRepository);
     }
 }

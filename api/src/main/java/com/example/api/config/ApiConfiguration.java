@@ -7,17 +7,9 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Configuration cho API module.
- * Đây là nơi wire các adapters vào SPI interfaces.
- */
 @Configuration
 public class ApiConfiguration {
 
-    /**
-     * Wire EventPublisherAdapter vào EventPublisher SPI.
-     * Tích hợp với EventToCommandBus để hỗ trợ cơ chế Domain Event fire đến CommandHandler.
-     */
     @Bean
     public EventPublisher eventPublisher(
             ApplicationEventPublisher applicationEventPublisher,

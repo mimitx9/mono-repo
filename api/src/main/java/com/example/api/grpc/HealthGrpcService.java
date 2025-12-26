@@ -7,9 +7,6 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * gRPC Service implementation cho Health Service.
- */
 @GrpcService
 public class HealthGrpcService extends HealthServiceGrpc.HealthServiceImplBase {
     
